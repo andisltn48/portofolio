@@ -14,7 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.home.index');
+        $data['heroContent'] = Home::take(1)->first();
+        return view('dashboard.home.index',$data);
     }
 
     /**
@@ -35,10 +36,6 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->image) {
-            return redirect()->back()->with('ERR','You must upload background hero');
-        }
-
         $checkData = Home::all();
         if (count($checkData) > 0) {
             $checkData[0]->update([
@@ -47,11 +44,6 @@ class HomeController extends Controller
 
             if ($request->image) {
                 unlink(public_path($checkData[0]->image));
-                try {
-                    
-                } catch (\Throwable $th) {
-                    //throw $th;
-                }
             
                 $image = $request->image;
                 $heroImage = time() . '_' . $image->getClientOriginalName();

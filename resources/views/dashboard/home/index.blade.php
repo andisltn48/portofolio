@@ -10,11 +10,13 @@
                 @csrf
                 <div class="form-group">
                   <label for="exampleInputName1">Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" required name="name">
+                  <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" value="{{$heroContent->name}}" required name="name">
                 </div>
                 
                 <div class="form-group">
-                  <label>Background Hero <span class="text-danger">*</span></label>
+                  <label>Background Hero</label>
+                  <br>
+                  <img src="{{$heroContent->image}}" alt="" class="mb-3 img-fluid">
                   <input type="file" name="image" class="file-upload-default">
                   <div class="input-group col-xs-12">
                     <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" required>

@@ -1,11 +1,11 @@
 <x-guest-layout>
-    <section class="site-hero" style="background-image: url(/rezume-master/images/image_1.jpg);" id="section-home" data-stellar-background-ratio="0.5">
+    <section class="site-hero" style="background-image: url({{$heroContent->image}});" id="section-home" data-stellar-background-ratio="0.5">
 		<div class="container">
 			<div class="row intro-text align-items-center justify-content-center">
 				<div class="col-md-10 text-center pt-5">
 
-					<h1 class="site-heading site-animate">Hello, I'm <strong class="d-block">Charles Anderson</strong></h1>
-					<strong class="d-block text-white text-uppercase letter-spacing">and this is My Rezume</strong>
+					<h1 class="site-heading site-animate">Hello, I'm <strong class="d-block">{{$heroContent->name}}</strong></h1>
+					<strong class="d-block text-white text-uppercase letter-spacing">and this is My Resume</strong>
 
 				</div>
 			</div>
@@ -16,17 +16,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="section-heading text-center col-md-12">
-					<h2>Featured <strong>Portfolio</strong></h2>
+					<h2>My <strong>Projects</strong></h2>
 				</div>
 			</div>
 			<div class="filters">
-				<ul>
-					<li class="active" data-filter="*">All</li>
-					<li data-filter=".packaging">Packaging</li>
-					<li data-filter=".mockup">Mockup</li>
-					<li data-filter=".typography">Typography</li>
-					<li data-filter=".photography">Photography</li>
-				</ul>
+				
 			</div>
 
 			<div class="filters-content">

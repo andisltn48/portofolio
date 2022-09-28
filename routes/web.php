@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ use App\Http\Controllers\HomeController;
 Route::resource('', WebsiteController::class)->only('index');
 Route::resource('dashboard', DashboardController::class);
 Route::resource('home', HomeController::class);
+Route::resource('project', ProjectController::class);

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Home;
 
-class WebsiteController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        $data['heroContent'] = Home::take(1)->first();
-        return view('website.home.index',$data);
+        return view('dashboard.project.index');
     }
 
     /**
@@ -36,7 +34,7 @@ class WebsiteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

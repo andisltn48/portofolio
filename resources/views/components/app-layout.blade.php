@@ -14,6 +14,9 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="/template/css/vertical-layout-light/style.css">
     <!-- endinject -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js" integrity="sha512-Ooi9IbjM2SIDjQ02ENbPFuuORT8F8Rc+rowcYfLneDwKRxw1+gVVj5tciVmV/APnA/Ys+qy1MbNKK3k2EaAHcw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </head>
   <body>
     <div class="container-scroller">
@@ -138,6 +141,13 @@
             <a class="nav-link" href="{{route('home.index')}}">
               <i class="typcn typcn-home-outline menu-icon"></i>
               <span class="menu-title">Home </span>
+              {{-- <span class="badge badge-primary ml-3">New</span> --}}
+            </a>
+          </li>
+          <li class="nav-item {{Request::is('project','project/*') ? 'active' : ''}}">
+            <a class="nav-link" href="{{route('project.index')}}">
+              <i class="typcn typcn-briefcase menu-icon"></i>
+              <span class="menu-title">Projects </span>
               {{-- <span class="badge badge-primary ml-3">New</span> --}}
             </a>
           </li>
