@@ -18,6 +18,12 @@ class ProjectController extends Controller
         return view('dashboard.project.index',$data);
     }
 
+    public function getDetail(Request $request)
+    {
+        $data['projects'] = Project::find($request->id);
+        return response()->json($data, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -87,7 +93,25 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updateProject = Project::find($id)->update([
+            'title' => $request->title,
+            'category_job' => $request->category_job,
+            'job_type' => $request->job_type,
+            'description' => $request->description,
+        ]);
+
+        if ($request->image) {
+            $image = $request->image;
+            $projectImage = time() . '_' . $image->getClientOriginalName();
+            $fileName = '/storage/project-image/' . $projectImage;
+            $image->move(public_path('storage/project-image'), $projectImage);
+
+            Project::find($id)->update([
+                'image' => $fileName,
+            ]);
+        }
+
+        return redirect()->back()->with('OK','Update project successfully');
     }
 
     /**
@@ -98,6 +122,7 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Project::findOrFail($id)->delete();
+        return redirect()->back()->with('OK','Delete project successfully');
     }
 }

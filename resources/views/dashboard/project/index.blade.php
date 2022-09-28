@@ -76,11 +76,11 @@
                         {{$project->created_at}}
                       </td>
                       <td class="nowrap">
-                        <button type="submit" class="btn btn-warning btn-edit mr-2">
+                        <button data-link="{{route('project.update',$project->id)}}" data-id="{{$project->id}}" type="submit" class="btn btn-warning btn-edit mr-2">
                           <i class="typcn typcn-edit menu-icon"></i>
                           Edit
                         </button>
-                        <button type="submit" class="btn btn-danger btn-create mr-2">
+                        <button data-link="{{route('project.destroy',$project->id)}}" type="submit" class="btn btn-danger btn-delete mr-2">
                           <i class="typcn typcn-trash menu-icon"></i>
                           Delete
                         </button>
@@ -164,32 +164,34 @@
             </button>
           </div>
           
-          <form method="POST" enctype="multipart/form-data">
+          <form method="POST" enctype="multipart/form-data" id="form-edit">
               @method('PUT')
               @csrf
               <div class="modal-body">
                 <div class="form-group">
-                  <label for="exampleInputName1">Title</label>
-                  <input name="title" type="text" class="form-control" id="exampleInputName1" placeholder="Title">
+                  <label>Title</label>
+                  <input name="title" type="text" class="form-control" id="title-edit" placeholder="Title">
                 </div>
                 <div class="form-group">
-                  <label for="exampleSelectGender">Category Job <span class="text-danger">*</span></label>
-                  <select name="category_job" class="form-control" id="exampleSelectGender" required>
+                  <label for="category-edit">Category Job <span class="text-danger">*</span></label>
+                  <select name="category_job" class="form-control" id="category-edit" required>
                     <option value="Full-time">Full-time</option>
                     <option value="Intern">Intern</option>
                     <option value="Freelance">Freelance</option>
                   </select>
                 </div>   
                 <div class="form-group">
-                  <label for="exampleSelectGender">Job Type <span class="text-danger">*</span></label>
-                  <select name="job_type" class="form-control" id="exampleSelectGender" required>
+                  <label for="job-edit">Job Type <span class="text-danger">*</span></label>
+                  <select name="job_type" class="form-control" id="job-edit" required>
                     <option value="Back End">Back End</option>
                     <option value="Front End">Front End</option>
                     <option value="Full Stack">Full Stack</option>
                   </select>
                 </div>    
                 <div class="form-group">
-                  <label>Image <span class="text-danger">*</span></label>
+                  <label>Image</label>
+                  <br>
+                  <img width="350" alt="" class="mb-2" id="img-edit">
                   <input type="file" name="image" class="file-upload-default">
                   <div class="input-group col-xs-12">
                     <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
@@ -204,8 +206,33 @@
                 </div>   
               </div>
               <div class="modal-footer">
-                  <button type="submit" class="btn btn-success">Simpan</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                  <button type="submit" class="btn btn-success">Save</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="delete-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title font-weight-bold">Delete Project</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <form method="POST" id="form-delete">
+              @csrf
+              @method('DELETE')
+              <div class="modal-body">
+                  <p>This action will delete the data and the deleted data cannot be recovered, are you sure you want to continue?</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-success">Yes, sure</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               </div>
           </form>
         </div>
@@ -220,7 +247,33 @@
 
       $(".btn-edit").on("click", function()
       {
+          var id = $(this).data('id');
+          var link = $(this).data('link');
+          $.ajax({
+              url: "{{route('project.get-detail')}}",
+              data: {
+                id : id
+              },
+              type: 'GET',
+              success: function(res) {
+                console.log(res)
+                $("#title-edit").val(res.projects.title);
+                $("#category-edit").val(res.projects.category_job).change();
+                $("#job-edit").val(res.projects.job_type).change();
+                $("#img-edit").attr("src", res.projects.image)
+                $("#form-edit").attr("action", link)
+                CKEDITOR.instances['exampleTextarea2'].setData(res.projects.description);
+              }
+          });
           $("#edit-modal").modal('show');
+      });
+
+      $(".btn-delete").on("click", function()
+      {
+          var link = $(this).data('link');
+          
+          $("#form-delete").attr("action", link)
+          $("#delete-modal").modal('show');
       });
 
       CKEDITOR.replace('exampleTextarea1')

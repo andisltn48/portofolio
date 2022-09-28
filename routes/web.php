@@ -22,3 +22,4 @@ Route::resource('', WebsiteController::class)->only('index');
 Route::resource('dashboard', DashboardController::class);
 Route::resource('home', HomeController::class);
 Route::resource('project', ProjectController::class);
+Route::get('/get-detail-project',[ProjectController::class,'getDetail'])->name('project.get-detail');
