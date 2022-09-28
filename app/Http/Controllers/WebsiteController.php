@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Home;
+use App\Models\Project;
 
 class WebsiteController extends Controller
 {
@@ -15,6 +16,7 @@ class WebsiteController extends Controller
     public function index()
     {
         $data['heroContent'] = Home::take(1)->first();
+        $data['projects'] = Project::all();
         return view('website.home.index',$data);
     }
 

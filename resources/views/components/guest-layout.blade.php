@@ -13,7 +13,22 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700" rel="stylesheet">
 
-
+	<style>
+		.btn-primary{
+			color: #212529;
+			background-color: #3643ab;
+			border-color: #3643ab;
+		}
+		.site-navbar.scrolled .navbar-nav > li > a.active{
+			color: #3643ab !important;
+		}
+		.site-navbar.scrolled .navbar-nav > li > a:hover {
+			-webkit-transition: .3s all;
+			-o-transition: .3s all;
+			transition: .3s all;
+			color: #3643ab !important;
+		}
+	</style>
 </head>
 <body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
 

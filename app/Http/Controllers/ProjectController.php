@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class ProjectController extends Controller
 {
@@ -13,7 +14,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('dashboard.project.index');
+        $data['projects'] = Project::paginate(15);
+        return view('dashboard.project.index',$data);
     }
 
     /**
@@ -34,7 +36,24 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        if (!$request->image) {
+            return redirect()->back()->with('ERR','You mush upload image');
+        }
+
+        $image = $request->image;
+        $projectImage = time() . '_' . $image->getClientOriginalName();
+        $fileName = '/storage/project-image/' . $projectImage;
+        $image->move(public_path('storage/project-image'), $projectImage);
+
+        $newProject = Project::create([
+            'title' => $request->title,
+            'category_job' => $request->category_job,
+            'job_type' => $request->job_type,
+            'image' => $fileName,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->back()->with('OK','Save new project successfully');
     }
 
     /**
